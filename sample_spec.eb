@@ -1,0 +1,19 @@
+require 'spec_helper'
+
+#パッケージ確認
+%w{gcc gcc-c++ make openssl-devel readline-devel zlib-devel nginx }.each do |pkg|
+  describe package(pkg) do
+    it { should be_installed }
+  end
+end
+
+#起動確認
+describe  service('nginx') do
+  it { should be_enabled }
+  it { should be_running }
+end
+
+#ポート確認
+describe port(80) do
+  it { should be_listening }
+end
